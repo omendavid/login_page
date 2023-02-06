@@ -31,7 +31,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('logout', 'logout');
     Route::post('refresh', 'refresh');
 
-    Route::group(['middleware' => 'auth:api'], function () {
+    Route::group(['middleware' => 'jwt.auth'], function () {
         Route::group(['namespace' => 'Fruit', 'prefix' => 'fruits'], function () {
             Route::get('/', [IndexController::class, 'index']);
         }
