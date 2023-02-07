@@ -1,6 +1,7 @@
 <template lang="">
     <div>
-        <Header :accessToken="accessToken" />
+        <Header @logOut="logOut"
+        v-bind="{screenSize,accessToken}" />
         <router-view></router-view>
     </div>
 </template>
@@ -14,6 +15,7 @@ export default {
     data() {
         return {
             accessToken: '',
+            screenSize: 0
         }
     },
     components: {
@@ -31,6 +33,12 @@ export default {
     
     mounted() {
         this.getAccessToken()
+
+        this.screenSize = window.screen.width
+
+        window.onresize=()=>{
+            this.screenSize = window.screen.width
+        }
     },
 
     methods: {
@@ -44,6 +52,7 @@ export default {
                 this.$router.push({name: 'user.login'})
             })
         }
+        
     },
     computed:{
         currentRoute(){

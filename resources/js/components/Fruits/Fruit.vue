@@ -1,5 +1,5 @@
 <template lang="">
-    <div>
+    <section class="fruit-sec">
         <table class="table w-50">
             <thead>
                 <tr>
@@ -16,7 +16,7 @@
                 </tr>
             </tbody>
         </table>
-    </div>
+    </section>
 </template>
 <script>
 import API from '../../api'
@@ -41,6 +41,26 @@ export default {
     },
 }
 </script>
-<style lang="">
+<style lang="scss" scoped>
+.fruit-sec{
+    width: 100vw;
+    height: 90vh;
+    display: flex;
+}
+.table{
+    margin: auto auto;
+    background: rgba(255, 255, 255, 0.211);
+    backdrop-filter: blur(10px);
+    border-collapse: collapse;
+    border: none;
+    color: rgb(198, 198, 198);
+    thead{
+        background: rgb(55, 4, 55);
+        color: rgb(191, 191, 191);
+    }
+    td,tr{
+        border: 1px solid rgb(43, 43, 43);
+    }
+}
     
 </style>
