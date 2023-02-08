@@ -10,6 +10,8 @@ use App\Http\Controllers\User\StoreController;
 
 use App\Http\Controllers\Fruit\IndexController;
 
+use App\Http\Controllers\User\GetUserController;
+
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -36,6 +38,7 @@ Route::controller(AuthController::class)->group(function () {
             Route::get('/', [IndexController::class, 'index']);
         }
         );
+       
     });
     
 });
@@ -50,5 +53,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'User' , 'prefix' => 'users'], function (){
         Route::post('/', [StoreController::class,'store']);
+        Route::post('/getuser', [GetUserController::class, 'index']);
 });
 

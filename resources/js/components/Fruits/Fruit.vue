@@ -1,6 +1,6 @@
 <template lang="">
     <section class="fruit-sec">
-        <table class="table w-50">
+        <table class="table">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -43,7 +43,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .fruit-sec{
-    width: 100vw;
+    width: 100%;
     height: 90vh;
     display: flex;
 }
@@ -54,6 +54,7 @@ export default {
     border-collapse: collapse;
     border: none;
     color: rgb(198, 198, 198);
+    width: 50%;
     thead{
         background: rgb(55, 4, 55);
         color: rgb(191, 191, 191);
@@ -63,4 +64,10 @@ export default {
     }
 }
     
+@media screen and (max-width: 500px) {
+    .table{
+        width: 80%;
+    }   
+}
+
 </style>

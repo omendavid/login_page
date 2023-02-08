@@ -168,12 +168,20 @@ header{
         }
         .menu{
             position: fixed;
-            width: 105vw;
-            height: 100vh;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
             z-index: 1;
-            transform: translate(150%, -8%);
-            transition: all 0.3s ease;
+            padding: 7.46vw 5.3vw;
+            box-sizing: border-box;
+            transform: translate(150%, 0%);
+            transition: all 0.6s cubic-bezier(0, 0, 0.08, 1);
             background-color: rgb(69, 11, 69);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
         }
         
     }
@@ -191,7 +199,7 @@ header{
     }
 
     .opened{
-        transform: translate(-93%,-8%) !important;
+        transform: translate(0%, 0%) !important;
     }
     
 @media screen and (max-width: 900px) {

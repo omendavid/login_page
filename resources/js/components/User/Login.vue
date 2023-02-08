@@ -1,6 +1,6 @@
 <template lang="">
     <section class="login">
-        <form class="w-25 form">
+        <form class="form">
             <h2>LOG IN</h2>
             <label class="border" for="">
             <input type="email" class="form-control" placeholder="Your Email" v-model="email" name="">
@@ -9,8 +9,9 @@
             <input type="password" class="form-control" placeholder="Password" v-model="password" name="">
             </label>
             <button @click.prevent="login" type="submit" class="neon-button" >SUBMIT</button>
+            <div v-if="error" class="text-danger">{{ error }}</div>
         </form>
-        <div v-if="error" class="text-danger">{{ error }}</div>
+        
     </section>
 </template>
 <script>
@@ -52,6 +53,7 @@ export default {
         backdrop-filter: blur(10px);
         padding: 1vw;
         border-radius: 5px;
+        width: 25%;
         box-sizing: border-box;
         margin: auto auto;
         display: flex;
@@ -185,5 +187,18 @@ export default {
         }
 
     }
+
+    @media screen and (max-width: 1200px) {
+        .form{
+            width: 50%;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .form{
+            width: 80%;
+        }
+    }
+
 
 </style>

@@ -1,6 +1,6 @@
 <template lang="">
     <section class="register">
-        <form class="w-25 form">
+        <form class="form">
             <h2>REGISTRATION</h2>
             <label class="border">
             <input v-model="name" type="text" class="form-control" placeholder="Your Name">
@@ -15,8 +15,9 @@
             <input v-model="password_confirmation" type="password" class="form-control" placeholder="Repeat Password" name="" >
             </label>
             <button @click.prevent="store" type="submit" class="neon-button">SUBMIT</button>
-        </form>
         <div v-if="error" class="text-danger">{{ error }}</div>
+        </form>
+        
     </section>
 </template>
 <script>
@@ -61,7 +62,7 @@ export default {
     .form{
         background: rgba(147, 147, 147, 0.115);
         backdrop-filter: blur(10px);
-        padding: 1vw;
+        padding: 1.5vw 1vw;
         border-radius: 5px;
         box-sizing: border-box;
         margin: auto auto;
@@ -69,6 +70,7 @@ export default {
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+        width: 25%;
         height: 80%;
 
         h2{
@@ -197,5 +199,18 @@ export default {
 
     }
 
+    @media screen and (max-width: 1200px) {
+        .form{
+            width: 50%;
+            padding: 3vw 2vw;
+        }
+    }
+
+    @media screen and (max-width: 600px) {
+        .form{
+            width: 80%;
+            padding: 5.5vw 2vw;
+        }
+    }
     
 </style>
