@@ -72,6 +72,9 @@ export default {
         flex-direction: column;
         justify-content: space-evenly;
         align-items: center;
+        h3, h4{
+            color: rgb(190, 190, 190);
+        }
     }
 
     @media screen and (max-width: 500px) {

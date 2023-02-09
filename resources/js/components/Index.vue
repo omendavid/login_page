@@ -24,7 +24,7 @@ export default {
 
     watch: {
         currentRoute:{
-            handler(value,prevvalue) {
+            handler(value) {
                 this.getAccessToken()
             },
             immediate:true
