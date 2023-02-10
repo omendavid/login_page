@@ -1,7 +1,20 @@
 <template lang="">
     <section class="register">
-        <form class="form">
+        <form class="form" >
             <h2>REGISTRATION</h2>
+            <label class="border" for="img">
+                <input type="file" @change="getImg" name="img" id="reg">
+            </label>
+
+            <cropper v-if="image!=null"
+            	class="cropper"
+            	:src="image"
+            	:stencil-props="{
+            		aspectRatio: 10/12
+            	}"
+            	@change="change"
+            />
+
             <label class="border">
             <input v-model="name" type="text" class="form-control" placeholder="Your Name">
             </label>
@@ -17,13 +30,20 @@
             <button @click.prevent="store" type="submit" class="neon-button">SUBMIT</button>
         <div v-if="error" class="text-danger">{{ error }}</div>
         </form>
+
+     
         
     </section>
 </template>
 <script>
+import { Cropper } from 'vue-advanced-cropper'
+import 'vue-advanced-cropper/dist/style.css';
+
 export default {
     data() {
         return {
+            image: null,
+            image_croped: null,
             name: "",
             email: "",
             password: "",
@@ -31,18 +51,38 @@ export default {
             error: null
         }
     },
+    components: {
+        Cropper
+    },
     methods: {
+
+        change({ coordinates, canvas }) {
+			console.log(coordinates, canvas)
+		},
+
+        getImg(e){
+            this.image = e.target.files[0]
+            this.image_croped = e.target.files[0]
+        },
+
         store() {
-            axios.post('/api/users', {
-                name: this.name,
-                email: this.email,
-                password: this.password,
-                password_confirmation: this.password_confirmation
-            }).then( res => {
+            console.log(this.image)
+            let data=new FormData
+            data.append('img',this.image)
+            data.append('img_croped',this.image_croped)
+            data.append('name', this.name)
+            data.append('email', this.email)
+            data.append('password',this.password)
+            data.append('password_confirmation', this.password_confirmation)
+
+            
+            axios.post('/api/users', data ).then( res => {
+                console.log('res');
                 console.log(res)
                 localStorage.setItem('access_token' , res.data.access_token)
                 this.$router.push({ name: 'user.personal'})
             }).catch( error => {
+                console.log('error');
                 console.log(error.response);
                 this.error = error.response.data.message
             })
@@ -52,6 +92,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+
+.cropper {
+	height: 600px;
+	width: 600px;
+	background: #DDD;
+}
     .register{
         width: 100%;
         height: 80vh;

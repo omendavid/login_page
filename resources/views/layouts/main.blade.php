@@ -8,6 +8,8 @@
     <link rel="stylesheet" href="{{ asset('sass/app.scss') }}">
     
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+
 </head>
 <body class='body'>
     <div id="app">
@@ -25,6 +27,9 @@
           5000 // Fading interval in miliseconds
         )
     </script>
+
+
+     
     <style>
         body{
             height: 100vh;

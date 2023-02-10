@@ -2,6 +2,7 @@
     <section class="personal-sec">
         <div class="pers-cont">
             <h2>PERSONAL</h2>
+            <img :src="info.img" alt="">
             <h3>Name: {{ info.name }}</h3>
             <h3>E-Mail: {{ info.email }}</h3>
             <h4>Created at: {{ info.created_at }}</h4>
@@ -16,10 +17,10 @@ export default {
     data() {
         return {
             info: {
+                img: '',
                 name: '',
                 email: '',
                 created_at: ''
-
             }
         }
     },
@@ -39,9 +40,12 @@ export default {
        axios.post('../api/users/getuser' , {id: id})
         .then(res=> {
          console.log(res)
-         this.info.email = res.data.email
+         
+            this.info.img = res.data.img
+            this.info.email = res.data.email
             this.info.name = res.data.name
             this.info.created_at = res.data.created_at
+            console.log(this.info.img);
         })
        .catch(error => {
         console.log(error);
@@ -75,7 +79,13 @@ export default {
         h3, h4{
             color: rgb(190, 190, 190);
         }
+
+        img{
+            max-width: 20%;
+            border-radius: 50%;
+        }
     }
+
 
     @media screen and (max-width: 500px) {
         .pers-cont{

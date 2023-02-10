@@ -19,6 +19,7 @@
     },
     "dependencies": {
         "npm-watch": "^0.11.0",
+        "vue-advanced-cropper": "^2.8.8",
         "vue-jwt-decode": "^0.1.0",
         "vue-router": "^4.1.6"
     }
