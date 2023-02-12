@@ -5,15 +5,23 @@
             <label class="border" for="img">
                 <input type="file" @change="getImg" name="img" id="reg">
             </label>
+            <div class="overlaping-div" v-if="img_preview !== null && done == false">
+                <div class="o-d-f-c">
+                    <div class="o-d-f-item">
+                        <label class="crop-label border" for="" >
+                            <Crop :img_preview="img_preview" @destination-change="dest" />
+                        </label>
 
-            <cropper v-if="image!=null"
-            	class="cropper"
-            	:src="image"
-            	:stencil-props="{
-            		aspectRatio: 10/12
-            	}"
-            	@change="change"
-            />
+                        <img v-show="image !== null" :src="destination" class="float-img">
+
+                    </div>
+                    <div>
+                        <button @click="doneImg" type="button" class="neon-button">DONE !</button>
+                    </div>
+                </div>
+            </div>
+
+
 
             <label class="border">
             <input v-model="name" type="text" class="form-control" placeholder="Your Name">
@@ -31,13 +39,14 @@
         <div v-if="error" class="text-danger">{{ error }}</div>
         </form>
 
-     
-        
+
+
     </section>
 </template>
 <script>
-import { Cropper } from 'vue-advanced-cropper'
-import 'vue-advanced-cropper/dist/style.css';
+
+import Crop from './Crop.vue'
+
 
 export default {
     data() {
@@ -48,11 +57,30 @@ export default {
             email: "",
             password: "",
             password_confirmation: null,
-            error: null
+            error: null,
+            done: false,
+
+
+            img_preview: null,
+            cropper: {},
+            destination: {}
         }
     },
+
+
+    watch: {
+        // image: function (value) {
+        //         this.canvas()
+        //     },
+
+    },
+
+    mounted() {
+
+    },
+
     components: {
-        Cropper
+        Crop,
     },
     methods: {
 
@@ -60,9 +88,44 @@ export default {
 			console.log(coordinates, canvas)
 		},
 
+        dest(val){
+            console.log(val)
+            this.destination = val
+        },
+
         getImg(e){
             this.image = e.target.files[0]
-            this.image_croped = e.target.files[0]
+            const fileReader = new FileReader();
+            fileReader.readAsDataURL(e.target.files[0]);
+            var _this = this
+
+            fileReader.onload = function (e) {
+
+
+                _this.img_preview = this.result
+                // async () => {
+                //     CreateComponentPublicInstance.img_preview = await this.result
+                // }
+            }
+
+        },
+
+        doneImg(){
+            const _this = this;
+            const url = this.destination;
+            fetch(url)
+              .then(res => res.blob())
+              .then(blob => {
+                const file = new File([blob], "File name",{ type: "image/png" })
+                console.log(file)
+                _this.image_croped = file
+                console.log(_this.image_croped)
+
+              })
+
+              this.done = !this.done
+
+
         },
 
         store() {
@@ -75,7 +138,7 @@ export default {
             data.append('password',this.password)
             data.append('password_confirmation', this.password_confirmation)
 
-            
+
             axios.post('/api/users', data ).then( res => {
                 console.log('res');
                 console.log(res)
@@ -88,15 +151,59 @@ export default {
             })
         }
     },
-    
 }
 </script>
 <style lang="scss" scoped>
 
-.cropper {
-	height: 600px;
-	width: 600px;
-	background: #DDD;
+.overlaping-div{
+    position: absolute;
+    top: -30%;
+    transform: translateY(5.5%);
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.652);
+    backdrop-filter: blur(7px);
+    z-index: 2;
+    display: flex;
+}
+.o-d-f-c{
+    margin: auto auto;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+
+}
+
+.o-d-f-item{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    div{
+        max-width: 45%;
+        img{
+            max-width: 45%;
+        }
+    }
+    img{
+        max-width: 45%;
+        width: auto;
+        height: auto;
+        aspect-ratio: 1 / 1;
+    }
+}
+.crop-label {
+	max-width: fit-content;
+	max-height: auto;
+
+}
+.float-img{
+    width: auto;
+    height: auto;
+    flex-basis: 28%;
 }
     .register{
         width: 100%;
@@ -104,7 +211,7 @@ export default {
         display: flex
 
     }
-    
+
     .form{
         background: rgba(147, 147, 147, 0.115);
         backdrop-filter: blur(10px);
@@ -122,12 +229,12 @@ export default {
         h2{
             color:rgb(30, 3, 39);
         }
-        
+
         .border{
             position: relative;
             width: 100%;
             border: none !important;
-            
+
         }
         .border::after{
                 position: absolute;
@@ -153,10 +260,10 @@ export default {
             .form-control:focus {
                  .form .border::after{
                     background: linear-gradient(90deg,  rgba(194,0,173,1) 0%, rgba(153,0,161,1) 50%, rgba(0,202,255,1) 100%);
-                }   
+                }
             }
-           
-            
+
+
         .form-control:focus{
             background: white;
             color: black;
@@ -164,7 +271,7 @@ export default {
             &::placeholder{
                 color: black;
             }
-            
+
         }
         // .btn{
         //     background-color: rgb(149, 18, 138);
@@ -205,7 +312,7 @@ export default {
           left: 0;
           width: 100%;
           height: 100%;
-        
+
           transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
           filter: blur(1em);
           opacity: 0.7;
@@ -231,7 +338,7 @@ export default {
             background: hsl(317 100% 54%);
           color: hsl(323 21% 16%);
           text-shadow: none;
-          
+
         }
 
         .neon-button:hover::before,
@@ -252,11 +359,27 @@ export default {
         }
     }
 
+    @media screen and (max-width: 1000px) {
+        .o-d-f-item{
+
+            flex-direction: column;
+            justify-content: space-around;
+            height: 78vh;
+            img{
+                width: auto;
+                height: auto;
+                aspect-ratio: 1 / 1;
+            }
+        }
+    }
+
     @media screen and (max-width: 600px) {
         .form{
             width: 80%;
             padding: 5.5vw 2vw;
         }
     }
-    
+
 </style>
+
+

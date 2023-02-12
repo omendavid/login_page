@@ -16,17 +16,18 @@ use Illuminate\Support\Facades\Storage;
 
 
 class StoreController extends Controller{
-    
+
     public function store(StoreRequest $request)
     {
         $data = $request->validated();
 
 
         $url = '';
+        $url_crop = '';
 
         if($request->hasFile('img')){
             if($request->file('img')->isvalid()){
-                
+
                 $extension = $request->img->extension();
                 if(!Storage::exists('/public/image')){
                     Storage::makeDirectory('/public/image',0775,true);
@@ -42,12 +43,31 @@ class StoreController extends Controller{
                 $url = Storage::url('image/'.$date.'/'.$imgName.'.'.$extension);
                 Storage::setVisibility($name,'public');
                 }
-                /* Nkary avelacnely petqa dzel */
+        }
+
+        if($request->hasFile('img_croped')){
+            if($request->file('img_croped')->isvalid()){
+
+                $extension = $request->img_croped->extension();
+                if(!Storage::exists('/public/image')){
+                    Storage::makeDirectory('/public/image',0775,true);
+                }
+                $date = \Carbon\Carbon::now()->format('Y M');
+                if(!Storage::exists('/public/image/'.$date)){
+                    Storage::makeDirectory('/public/image/'.$date,0775,true);
+                    Storage::setVisibility('/public/image/','public');
+                }
+                $mt_rand = mt_rand(100000,999999);
+                $imgName = \Carbon\Carbon::now()->format('YMd').$mt_rand;
+                $name = $request->img_croped->storeAs('/public/image/'.$date,$imgName.'.'.$extension);
+                $url_crop = Storage::url('image/'.$date.'/'.$imgName.'.'.$extension);
+                Storage::setVisibility($name,'public');
+                }
         }
 
         $data['img'] = $url;
 
-        $data['img_croped'] = $url;
+        $data['img_croped'] = $url_crop;
 
         $data['password'] = Hash::make($data['password']);
         // info(json_encode($data,JSON_PRETTY_PRINT));
@@ -59,7 +79,7 @@ class StoreController extends Controller{
             return response(['message' => 'User with this E-Mail already exists'], 403);
         }
         $user=User::create($data);
-        
+
         $token = auth()->tokenById($user->id);
 
         return response(['access_token' => $token]);

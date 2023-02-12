@@ -6,7 +6,7 @@
             <h3>Name: {{ info.name }}</h3>
             <h3>E-Mail: {{ info.email }}</h3>
             <h4>Created at: {{ info.created_at }}</h4>
-        </div> 
+        </div>
     </section>
 </template>
 <script>
@@ -18,6 +18,7 @@ export default {
         return {
             info: {
                 img: '',
+                img_croped: '',
                 name: '',
                 email: '',
                 created_at: ''
@@ -40,8 +41,9 @@ export default {
        axios.post('../api/users/getuser' , {id: id})
         .then(res=> {
          console.log(res)
-         
+
             this.info.img = res.data.img
+            this.info.img_croped = res.data.img_croped
             this.info.email = res.data.email
             this.info.name = res.data.name
             this.info.created_at = res.data.created_at
@@ -83,6 +85,7 @@ export default {
         img{
             max-width: 20%;
             border-radius: 50%;
+            object-fit: cover;
         }
     }
 

@@ -6,14 +6,14 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>JWT SPA</title>
     <link rel="stylesheet" href="{{ asset('sass/app.scss') }}">
-    
+
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
 
 </head>
 <body class='body'>
     <div id="app">
-        
+
     </div>
     <script src="https://rawcdn.githack.com/karolsw3/gradientify/7f5a74cd8380a843477b7abfa9baca2fd127013a/dist/gradientify.min.js"></script>
     <script>
@@ -29,7 +29,7 @@
     </script>
 
 
-     
+
     <style>
         body{
             height: 100vh;
