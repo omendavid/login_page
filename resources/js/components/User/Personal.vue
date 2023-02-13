@@ -1,8 +1,12 @@
 <template lang="">
     <section class="personal-sec">
+        <div class="show-img" v-if="show" @click="showDiv">
+                <img :src="info.img" alt="">
+            </div>
         <div class="pers-cont">
+            
             <h2>PERSONAL</h2>
-            <img :src="info.img" alt="">
+            <img :src="info.img_croped" alt="" @mousedown="showDiv">
             <h3>Name: {{ info.name }}</h3>
             <h3>E-Mail: {{ info.email }}</h3>
             <h4>Created at: {{ info.created_at }}</h4>
@@ -22,7 +26,8 @@ export default {
                 name: '',
                 email: '',
                 created_at: ''
-            }
+            },
+            show: false,
         }
     },
     mounted() {
@@ -57,10 +62,31 @@ export default {
 
     },
 
+    methods: {
+        showDiv() {
+            this.show = !this.show
+        }
+    },
+
 
 }
 </script>
 <style lang="scss" scoped>
+.show-img {
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+    bottom: 50%;
+    transform: translateY(50%);
+    background: rgba(0, 0, 0, 0.652);
+    backdrop-filter: blur(5px);
+    display: flex;
+    z-index: 3;
+    img{
+        max-width: 45%;
+        margin: auto auto;
+    }
+}
     .personal-sec{
         width: 100%;
         height: 90vh;
@@ -82,17 +108,30 @@ export default {
             color: rgb(190, 190, 190);
         }
 
-        img{
+        & > img{
             max-width: 20%;
             border-radius: 50%;
             object-fit: cover;
+            cursor: pointer;
         }
+
+
     }
 
+    @media screen and (max-width: 650px) {
+
+        .show-img{
+            img{
+                max-width: 80%;
+            }
+        
+
+    }
 
     @media screen and (max-width: 500px) {
         .pers-cont{
             width: 80%;
+        }
         }
     }
 </style>

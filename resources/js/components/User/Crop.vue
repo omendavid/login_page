@@ -1,5 +1,5 @@
 <template lang="">
-    <div>
+    <div class="crop">
         <img :src="img_preview" ref="image">
     </div>
 </template>
@@ -31,6 +31,8 @@ export default {
             zoomable: false,
             scalable: false,
             aspectRatio: 1,
+            viewMode: 1,
+            responsive: true,
 
             crop: () => {
                 const canvas = this.cropper.getCroppedCanvas();
@@ -50,12 +52,13 @@ export default {
 }
 </script>
 <style lang="scss">
-.cropper-container{
-    max-width: 100%;
-    max-height: 50vh;
+.crop{
+    max-width: 45%;
+    max-height: 46vh;
+}
+.cropper-image {
+  max-width: 100%;
+  height: auto;
 }
 
-.cropper-crop-box{
-    transform: translate(auto,auto) !important;
-}
 </style>

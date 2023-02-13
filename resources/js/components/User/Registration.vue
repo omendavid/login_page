@@ -1,11 +1,6 @@
 <template lang="">
     <section class="register">
-        <form class="form" >
-            <h2>REGISTRATION</h2>
-            <label class="border" for="img">
-                <input type="file" @change="getImg" name="img" id="reg">
-            </label>
-            <div class="overlaping-div" v-if="img_preview !== null && done == false">
+        <div class="overlaping-div" v-if="img_preview !== null && done == false">
                 <div class="o-d-f-c">
                     <div class="o-d-f-item">
                         <label class="crop-label border" for="" >
@@ -20,6 +15,12 @@
                     </div>
                 </div>
             </div>
+        <form class="form" >
+            <h2>REGISTRATION</h2>
+            <label class="border" for="img">
+                <input type="file" @change="getImg" name="img" id="reg">
+            </label>
+            
 
 
 
@@ -155,14 +156,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 
+.border{
+    input[type="file"]{
+        max-width: 100%;
+    }
+}
 .overlaping-div{
-    position: absolute;
-    top: -30%;
-    transform: translateY(5.5%);
+    position: fixed;
+    top: 0;
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.652);
-    backdrop-filter: blur(7px);
+    backdrop-filter: blur(5px);
     z-index: 2;
     display: flex;
 }
@@ -196,8 +201,9 @@ export default {
     }
 }
 .crop-label {
-	max-width: fit-content;
-	max-height: auto;
+	max-width: 60%;
+    width: fit-content;
+	
 
 }
 .float-img{
@@ -205,6 +211,73 @@ export default {
     height: auto;
     flex-basis: 28%;
 }
+
+.neon-button {
+            font-size: 16px;
+
+            display: inline-block;
+            cursor: pointer;
+            text-decoration: none;
+            color: hsl(317 100% 54%);
+            border: hsl(317 100% 54%) 0.125em solid;
+            padding: 0.25em 1em;
+            border-radius: 0.25em;
+            background: transparent;
+            text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
+
+            box-shadow: inset 0 0 0.5em 0 hsl(317 100% 54%), 0 0 0.5em 0 hsl(317 100% 54%);
+            font-weight: 600;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .neon-button::before {
+          pointer-events: none;
+          content: "";
+          position: absolute;
+          background: hsl(317 100% 54%);
+          top: 90%;
+          left: 0;
+          width: 100%;
+          height: 100%;
+
+          transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
+          filter: blur(1em);
+          opacity: 0.7;
+          transition: opacity 100ms linear;
+        }
+
+        .neon-button::after {
+          content: "";
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          box-shadow: 0 0 2em 0.5em hsl(317 100% 54%);
+          opacity: 0;
+          background-color: hsl(317 100% 54%);
+          z-index: -1;
+          transition: opacity 100ms linear;
+        }
+
+        .neon-button:hover,
+        .neon-button:focus {
+            background: hsl(317 100% 54%);
+          color: hsl(323 21% 16%);
+          text-shadow: none;
+
+        }
+
+        .neon-button:hover::before,
+        .neon-button:focus::before {
+          opacity: 1;
+        }
+        .neon-button:hover::after,
+        .neon-button:focus::after {
+          opacity: 1;
+        }
+
     .register{
         width: 100%;
         height: 80vh;
@@ -284,71 +357,7 @@ export default {
         //         background-color: rgb(126, 16, 117);
         //     }
         // }
-        .neon-button {
-            font-size: 16px;
-
-            display: inline-block;
-            cursor: pointer;
-            text-decoration: none;
-            color: hsl(317 100% 54%);
-            border: hsl(317 100% 54%) 0.125em solid;
-            padding: 0.25em 1em;
-            border-radius: 0.25em;
-            background: transparent;
-            text-shadow: 0 0 0.125em hsl(0 0% 100% / 0.3), 0 0 0.45em currentColor;
-
-            box-shadow: inset 0 0 0.5em 0 hsl(317 100% 54%), 0 0 0.5em 0 hsl(317 100% 54%);
-            font-weight: 600;
-            position: relative;
-            transition: all 0.3s ease;
-        }
-
-        .neon-button::before {
-          pointer-events: none;
-          content: "";
-          position: absolute;
-          background: hsl(317 100% 54%);
-          top: 90%;
-          left: 0;
-          width: 100%;
-          height: 100%;
-
-          transform: perspective(1em) rotateX(40deg) scale(1, 0.35);
-          filter: blur(1em);
-          opacity: 0.7;
-          transition: opacity 100ms linear;
-        }
-
-        .neon-button::after {
-          content: "";
-          position: absolute;
-          top: 0;
-          bottom: 0;
-          left: 0;
-          right: 0;
-          box-shadow: 0 0 2em 0.5em hsl(317 100% 54%);
-          opacity: 0;
-          background-color: hsl(317 100% 54%);
-          z-index: -1;
-          transition: opacity 100ms linear;
-        }
-
-        .neon-button:hover,
-        .neon-button:focus {
-            background: hsl(317 100% 54%);
-          color: hsl(323 21% 16%);
-          text-shadow: none;
-
-        }
-
-        .neon-button:hover::before,
-        .neon-button:focus::before {
-          opacity: 1;
-        }
-        .neon-button:hover::after,
-        .neon-button:focus::after {
-          opacity: 1;
-        }
+        
 
     }
 
@@ -360,25 +369,67 @@ export default {
     }
 
     @media screen and (max-width: 1000px) {
+        .o-d-f-c{
+            gap: 3.4vw;
+        }
         .o-d-f-item{
 
             flex-direction: column;
             justify-content: space-around;
             height: 78vh;
             img{
-                width: auto;
-                height: auto;
-                aspect-ratio: 1 / 1;
+                max-width: 50%;
             }
+        }
+        .crop-label{
+            max-width: 100%;
         }
     }
 
+    @media screen and (max-width: 800px) {
+    .o-d-f-item{
+        img{
+            max-width: 60%;
+        }
+    }
+    
+    }
+
     @media screen and (max-width: 600px) {
+
+        .o-d-f-item{
+            img{
+                max-width: 75%;
+            }
+        }
         .form{
             width: 80%;
             padding: 5.5vw 2vw;
         }
     }
+
+    @media screen and (max-width: 450px) {
+        .o-d-f-item{
+            img{
+                max-width: 85%;
+            }
+        }
+
+    }
+
+    @media screen and (max-width: 400px) {
+        .o-d-f-item{
+            img{
+                max-width: 100%;
+            }
+        }
+
+        .o-d-f-c{
+            gap:7vw
+        }
+
+    }
+
 
 </style>
 
