@@ -28,7 +28,7 @@ export default {
     mounted() {
 
         this.cropper = new Cropper(this.$refs.image, {
-            zoomable: false,
+            zoomable: true,
             scalable: false,
             aspectRatio: 1,
             viewMode: 1,
