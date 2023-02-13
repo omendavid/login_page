@@ -43,7 +43,7 @@ export default {
 
        console.log(id)
 
-       axios.post('../api/users/getuser' , {id: id})
+       API.post('../api/user/getuser' , {id: id})
         .then(res=> {
          console.log(res)
 

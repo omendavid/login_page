@@ -38,6 +38,9 @@ Route::controller(AuthController::class)->group(function () {
             Route::get('/', [IndexController::class, 'index']);
         }
         );
+        Route::group(['namespace' => 'User' , 'prefix' => 'user'], function (){
+            Route::post('/getuser', [GetUserController::class, 'index']);
+        });
        
     });
     
@@ -53,6 +56,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'User' , 'prefix' => 'users'], function (){
         Route::post('/', [StoreController::class,'store']);
-        Route::post('/getuser', [GetUserController::class, 'index']);
 });
 
